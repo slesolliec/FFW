@@ -1,0 +1,104 @@
+
+
+{if $user.$idUField}
+	<div class="widget_login_logged">
+	<div class="box">
+		{if $user.$loginUField}
+			<h3>{$user.$loginUField}</h3>
+		{else}
+			<h3 title="{$user.loginUField}">{$user.$emailUField|truncate:25:'...'}</h3>
+		{/if}
+		
+		{foreach item=link key=key from=$conf.menu_user}
+			<a href="{$link}">{$key}</a>
+		{/foreach}
+	</div>
+	</div>
+
+{else}
+	<div class="widget_login_unlogged">
+	<div class="box">
+
+		{if $conf.openid}
+			<div style="float:right;">
+				<img id="login_via_key_button" src="ffw/icons/key.png" alt="connexion via code d'accès / mot de passe" title="connexion via code d'accès / mot de passe" width="16" height="16" onclick="show_login('key');" style="cursor:pointer;" />
+				<img id="login_via_openid_button" src="ffw/icons/openid_grey.png" alt="connexion via openID" title="connexion via openID" width="16" height="16" onclick="show_login('openid');" style="cursor:pointer;" />
+			</div>
+		{/if}
+
+		<h3 class="handle">Se connecter</h3>
+
+		<div id="login_via_key">
+			<form action="login/login" method="post" id="login_form">
+				{if $page.redirect}
+					<input type="hidden" name="redirect" value="{$page.redirect}"/>
+				{/if}
+				<div class="field">
+					<div class="names">{if $loginUField == 'none'}email{else}code d'accès{/if} :</div>
+					<div class="inputs"><input name="login" /></div>
+				</div>
+				<div class="field">
+					<div class="names">mot de passe :</div>
+					<div class="inputs"><input type="password" name="pwd" /></div>
+				</div>
+				<div class="field">
+					<div class="inputs"><input type="submit" value="se connecter" /></div>
+				</div>
+			</form>
+			<a href="login/forgot">mot de passe oublié</a>
+			<a href="user/create">ouvrir un compte</a>
+		</div>
+
+		{if $conf.openid}
+			<div id="login_via_openid" style="display:none;">
+				<form method="get" action="login/openid_try_auth" class="small_padding">
+					<input type="hidden" name="action" value="verify" />
+					<div class="field">
+						<div class="names">openID :</div>
+						<div class="inputs"><input name="openid_identifier"
+								style="background: white url(ffw/icons/openid.png) left top no-repeat;padding-left:18px;"
+							/></div>
+					</div>
+					<div class="field">
+						<div class="inputs"><input type="submit" value="se connecter via openID" /></div>
+					</div>
+				</form>
+			</div>
+		{/if}
+
+	</div>
+	</div>
+{/if}
+
+
+{if $user.is_admin}
+	<div class="widget_login_admin">
+	<div class="box">
+		<h3>Administration</h3>
+		{foreach item=link key=key from=$conf.menu_admin}
+			<a href="{$link}">{$key}</a>
+		{/foreach}
+	</div>
+	</div>
+{/if}
+
+
+{literal}
+	<script type="text/javascript">
+	// show / hide the different types of login form : password, openID, ...
+	function show_login(what) {
+		if (what == 'openid') {
+			$('#login_via_key').css('display','none');
+			$('#login_via_openid').css('display','block');
+			$('#login_via_key_button').attr('src','ffw/icons/key_grey.png');
+			$('#login_via_openid_button').attr('src','ffw/icons/openid.png');
+		} else {
+			$('#login_via_key').css('display','block');
+			$('#login_via_openid').css('display','none');
+			$('#login_via_key_button').attr('src','ffw/icons/key.png');
+			$('#login_via_openid_button').attr('src','ffw/icons/openid_grey.png');
+		}
+	}
+	
+	</script>
+{/literal}

@@ -1,0 +1,32 @@
+
+<p>Merci d'identifier les champs de votre fichier téléchargé avec les champs de la table de données.</p>
+
+<form action="{$page.module}/{$page.action}_2" method="post" name="zeform">
+
+	{foreach item=field from=$fields}
+		<div class='field'>
+			<div class="names">{$field.raw}</div>
+			<div class="inputs">
+				<select name="field[]">
+					<option value="">ne pas importer ce champ</option>
+					{foreach item=field_type key=field_name from=$table_fields}
+						<option value="{$field_name}" {if $field_name==$field.cooked}selected='selected'{/if} >{$field_name} {if $field_type}- {$field_type|mysql_types_for_moldus}{/if}</option>
+					{/foreach}
+				</select>
+			</div>
+		</div>
+	{/foreach}
+	
+		<div class='field'>
+			<div class="names"></div>
+			<div class="inputs">
+				<input type="checkbox" name="import_first_line" value="1"/> Importer la première ligne
+			</div>
+		</div>
+
+	<div class='field'>
+		<div class='inputs'><input type="submit" value="Importer les données dans la base" /></div>
+	</div>
+
+</form>
+

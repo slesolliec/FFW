@@ -1,0 +1,28 @@
+
+
+<p>Vous venez de demander une régénération de votre mot de passe.</p>
+
+<p>Les codes d'accés de votre compte sont maintenant :<br />
+email : <strong>{$get_lost.$emailUField}</strong><br />
+{if $get_lost.$loginUField}
+	code d'accès : <strong>{$get_lost.$loginUField}</strong><br />
+{/if}
+mot de passe : <strong>{$pwd}</strong><br />
+
+<p>Connectez-vous sur le site en allant sur <a href='{$conf.url}'>{$conf.url}</a></p>
+
+<!--
+	
+	POSTed vars fucking don't work in mail messages !!!!
+	
+	 p>Vous pouvez aussi vous connecter une fois en cliquant directement sur ce bouton :
+	<form action='{$conf.url}login/login' method='post'>
+		{if $get_lost.$loginUField}
+			<input type='hidden' name='login'	value='{$get_lost.$loginUField}' />
+		{else}
+			<input type='hidden' name='login'	value='{$get_lost.$emailUField}' />
+		{/if}
+		<input type='hidden' name='pwd'		value='{$pwd}' />
+		<input type='submit' value='Connexion' />
+	</form>
+</p -->

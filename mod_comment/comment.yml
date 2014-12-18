@@ -1,0 +1,56 @@
+table: comments
+
+actions:
+  create:
+    field_deny:
+      - user_id
+      - blog_id
+    fields:
+  
+  insert:
+    fields:
+      user_id:
+        filter: return $user['id'];
+      blog_id:
+        filter: return $blog['id'];
+    	
+
+  edit:
+    field_deny:
+      - post_hour
+      - nb_comments
+    fields:
+      oo_id:
+        type: hidden
+      module:
+        type: hidden
+      created_at:
+        name: Date
+        type: datetime
+      user_id:
+        name: Auteur
+
+  update:
+    redirect: return comment_get_view_link($oo).chr(35)."comment_{$oo['id']}?".date('U');
+    fields:
+      created_at:
+        filter: return inverser_date($oo['created_at']).' '.str_replace('h',':',$oo['created_at_time']);
+    	
+    
+  list:
+    no_create_link: true
+    field_deny:
+      - oo_id
+    order_by: created_at desc
+    fields:
+      created_at:
+        name: heure
+        filter: return inverser_date($oo['created_at']).str_replace(':','h',substr($oo['created_at'],10,6));
+      title:
+        name: titre
+      user_id:
+        name: auth.
+        info: ID de l'auteur
+        filter: global $db;return "<acronym title=\"".$db->getone("select {$conf['author_name_column']} from $userTable where id={$oo['user_id']}")."\">{$oo['user_id']}</acronym>";
+      view_link:
+        filter: return "<a href='".comment_get_view_link($oo).chr(35)."comment_{$oo['id']}'><img src='ffw/icons/doc_view.png' alt='voir' width='16' height='16' /></a>";

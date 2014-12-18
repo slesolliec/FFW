@@ -1,0 +1,76 @@
+# config du site
+
+url: http://cheffes.metacites.net/		# url of your site
+domain: cheffes.metacites.net			# domain of your site
+dsn: mysql://login:password@localhost/database	# dsn
+ffw: /home/metacite/FFW/			# absolute path to FFW
+mods: /home/metacite/cheffes/mods/	# absolute path to your modules
+
+# paths to libs
+smarty: /home/metacite/libphp/smarty/libs/Smarty.class.php
+adodb: /home/metacite/libphp/adodb/adodb.inc.php
+
+# PHPMailer: /home/metacite/lib/PHPMailer/class.phpmailer.php
+views_c: /home/metacite/cheffes/mods/views_c	# path to the compiled templates directory
+title: title of you site
+flag: short tag for your site
+description: small description of your site
+email_from: stephane@metacites.net
+mode: dev
+footer: some footer for your site
+default_module: wiki
+hook_post_module: include($conf['mods'].'mod_wiki/inc_wiki_menu.php');
+author_name_column: concat(users.prenom,' ',users.nom)
+
+widgets:
+  - login/loginbox
+  - wiki/admin
+
+userTable:
+  userTable: users
+  idUField: id
+  loginUField: none
+  pwdUField: pwd
+  emailUField: email
+  cookieUField: cnx_cookie
+	
+menu:
+  Accueil:
+  Le Conseil: conseil
+  Cadre de vie: cadre_de_vie
+  Voirie rurale: tourisme
+  Urbanisme: urbanisme
+  Sport: sport
+  Culture: culture
+  Associations: associations
+  Informations: info
+
+menu2:
+  CCLS: CCLS
+  PVA: PVA
+  CG49: CG49
+  Pays de la Loire: pays_de_la_Loire
+
+menu_user:
+  Mes infos: user/edit
+  Déconnexion: login/logout
+
+menu_admin:
+  Utilisateurs: useradmin
+  Commentaires: comment
+
+comment:
+  view_url:
+    info: return $conf['url'].'info/post/'.$oo['oo_id'];
+    wiki: global $db; return $conf['url'].'wiki/'.$db->getone("select name from pages where id={$oo['oo_id']}");
+
+# local configs
+cheffes.local:
+  url: http://cheffes.local/
+  domain: cheffes.local
+  dsn: mysql://otherlogin:otherpassword@localhost/otherdb
+  mods: /Users/stephane/web/cheffes/mods/
+  PHPMailer: /Users/stephane/web/lib/PHPMailer/class.phpmailer.php
+  views_c: /Users/stephane/web/cheffes/mods/views_c
+  default_module: wiki
+

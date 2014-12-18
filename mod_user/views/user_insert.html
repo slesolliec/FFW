@@ -1,0 +1,19 @@
+<p>Vous venez de vous inscrire sur <a href='{$conf.url}'>{$conf.url}</a>.</p>
+
+<p>Les codes d'accés de votre compte sont :<br />
+email : <strong>{$oo.email}</strong><br />
+{if $oo.login}code d'accès : <strong>{$oo.login}</strong><br />{/if}
+mot de passe : <strong>{$oo.pwd}</strong></p>
+
+<p>Connectez-vous sur le site en allant sur <a href='{$conf.url}'>{$conf.url}</a></p>
+
+<!-- no use as some mailers eat the POSTed arguments of an in-mail form
+<p>Vous pouvez aussi vous connecter une fois en cliquant directement sur ce bouton :
+	<form action='{$conf.url}login/login' method='post'>
+		<input type='hidden' name='login'	value='{if $user.login}{$user.login}{else}{$user.email}{/if}' />
+		<input type='hidden' name='pwd'		value='{$user.pwd}' />
+		<input type='submit' value='Connexion' />
+	</form>
+</p>
+
+-->

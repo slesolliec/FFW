@@ -1,0 +1,93 @@
+table: users
+
+object: utilisateur
+object_plural: utilisateurs
+object_genre: m
+object_art: un
+object_det: 'l'''
+
+
+access:
+  logged:
+    condition: return $user['id'];
+    message: Il faut être connecté au site pour consulter ce module.
+  admin:
+    condition: return $user['is_admin'];
+    message: Il faut être administrateur pour consulter ce module.
+
+
+fields:
+  is_active:
+    name: Actif
+  is_admin:
+    name: Administrateur
+  pwd:
+    name: Mot de passe
+  created_at:
+    name: Créé le
+
+
+
+actions:
+  create:
+    field_deny:
+      - cnx_cookie
+      - created_at
+  
+  list:
+    field_deny:
+      - pwd
+      - id
+      - cnx_cookie
+    fields:
+      is_active:
+        name: Ac.
+        info: compte actif
+#        type: bool_cross
+      is_admin:
+        name: Adm.
+        info: Administrateur
+#        type: bool_cross
+      is_writer:
+        name: Aut.
+        info: Auteur
+      email:
+        filter: return "<a href='mailto:{$oo['email']}'>{$oo['email']}</a>";
+  
+  edit:
+    title: name
+    field_deny:
+      - cnx_cookie
+      - created_at
+    fields:
+      id:
+        type: hidden
+      pwd:
+        name: Mot de passe
+        type: pwd
+        info: (A remplir uniquement pour changer le mot de passe.)
+      is_admin:
+        name: Administrateur
+      is_active:
+        name: Actif
+      is_writer:
+        name: Auteur
+        
+  
+  update:
+    fields:
+      pwd:
+        type: pwd
+      is_active:
+        type: bool
+      is_admin:
+        type: bool
+  
+  view:
+    title: name
+    field_deny:
+      - cnx_cookie
+      - pwd
+    fields:
+      is_writer:
+        name: Auteur

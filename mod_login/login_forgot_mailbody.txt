@@ -1,0 +1,8 @@
+Vous venez de demander une régénération de votre mot de passe.
+
+Les coordonnees de votre compte sur {$conf.url} sont maintenant :
+email        : {$get_lost.$emailUField}
+{if $conf.userTable.loginUField != 'none'}nom          : {$get_lost.$loginUField}{/if}
+mot de passe : {$pwd}
+
+Connectez-vous sur le site en allant sur {$conf.url}

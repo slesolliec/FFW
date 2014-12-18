@@ -1,0 +1,14 @@
+<h3>Purger l'historique de votre wiki</h3>
+
+<p>En cliquant sur le bouton <strong>purger</strong> ci-dessous, vous allez effacer toutes les versions antérieures des pages de votre wiki.</p>
+
+<p>Votre wiki aura ainsi perdu la mémoire de toutes les étapes de la création de ses pages.</p>
+
+<p>En faisant celà de temps en temps, vous contribuez à garder votre base de donnée légère et donc rapide.</p>
+
+<p>Il y a actuellement {$page.nb_archives} versions de pages dans votre archive.</p>
+
+<form action="{$wiki.url}maintenance" method="post">
+	<input type="hidden" name="purge_it" value="{$page.nb_archives|xss_armor}" />
+	<input type="submit" value="Purger" />
+</form>

@@ -1,0 +1,60 @@
+
+name:	(module)				    # name of module
+table: (module)s			    # mysql table on which we work
+object: (module)		      # name of object
+object_plural: (module)s	# name of object
+object_genre: m		        # is object m=male, f=female, n=neutral
+object_art: 'le '         # le |la |l 
+object_det:	'un '         # un |une 
+
+
+
+action_links:
+  import:
+    url: (module)/import
+    img: ffw/icons/page_white_get.png
+    txt: importer
+  add:
+    url: (module)/create
+    img: ffw/icons/page_white_add.png
+    txt: ajouter
+  list:
+    url: (module)/list
+    img: ffw/icons/page_white_stack.png
+    txt: liste
+
+
+actions:
+  create:
+    action: (module)/insert
+    submit: Créer
+
+  list:
+    order_by: id
+    order: asc
+    limit: 100
+    fields:
+      view_link:
+        name: v.
+        info: voir
+      edit_link:
+        name: m.
+        info: modifier
+
+  edit:
+    action: (module)/update
+    submit: Enregistrer
+
+  import:
+    introduction:|
+      Ce formulaire vous permet d'importer un fichier CSV directement dans la base de données.
+      <br>
+      <br>Un fichier CSV est un fichier permettant d'exporter / importer des bases de données. Chaque fiche est contenue sur une ligne unique,
+      et les champs sont séparés par un point-virgule.
+    action: (module)/import_csv
+    submit: Importer le fichier CSV
+
+#  export:
+#    field_deny:
+#      - created_at
+#      - updated_at

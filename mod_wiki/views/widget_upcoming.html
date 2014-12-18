@@ -1,0 +1,11 @@
+
+<div class="widget_wiki_upcoming">
+	<div class="box">
+		<h3>A venir</h3>
+
+		{section name=sec loop=$pages}
+			<a href="{$wiki.url}{$pages[sec].name}">{$pages[sec].page_date|inverser_date|substr:0:5} {$pages[sec].title}</a>
+		{/section}
+
+	</div>
+</div>

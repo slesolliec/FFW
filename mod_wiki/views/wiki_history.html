@@ -1,0 +1,25 @@
+
+<table>
+	<tr><th>date - heure</th><th>auteur</th><th>modification</th><th></th><th></th></tr>
+	<tr><td>{$page.updated_at|inverser_date} {$page.updated_at|substr:11:5|replace:':':'h'}</td>
+		<td>{$page.author_name}</td>
+		<td>{$page.edit_desc}</td>
+		<td><a class="backlink" href="{$wiki.url}{$page.name}">consulter</a></td>
+		<td><a class="backlink" href="{$wiki.url}edit/{$page.name}">modifier</a></td>
+	</tr>
+
+	{if $page_archived}
+		{foreach from=$page_archived item=pa}
+	
+			<tr><td>{$pa.updated_at|inverser_date} {$pa.updated_at|substr:11:5|replace:':':'h'}</td>
+				<td>{$page.author_name}</td>
+				<td>{$page.edit_desc}</td>
+				<td><a class="backlink" href="{$wiki.url}{$page.name}?updated_at={$pa.updated_at|urlencode}" rel="nofollow">consulter</a></td>
+				<td><a class="backlink" href="{$wiki.url}edit/{$page.name}?updated_at={$pa.updated_at|urlencode}" rel="nofollow">reprendre</a></td>
+			</tr>
+
+		{/foreach}
+	{/if}
+
+</table>
+</form>

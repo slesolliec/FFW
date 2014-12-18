@@ -1,0 +1,72 @@
+
+object: utilisateur
+object_genre: m
+object_art: un
+object_det: 'l'''
+
+actions:
+  create:
+    introduction: Remplissez ce formulaire pour vous ouvrir un compte, et ainsi utiliser toutes les fonctionnalités de notre site&nbsp;:
+    action: user/insert
+    field_order:
+      - loginUField
+      - emailUField
+    fields:
+      loginUField:
+        name: Futur code d'accès
+      emailUField:
+        name: Email valide
+        info: Votre mot de passe vous sera envoyé par email. Ne vous trompez pas.
+    submit: Créer le compte
+
+  insert:
+    fields:
+      is_active:
+        filter: return 1;
+      is_admin:
+        filter: return 0;
+
+  edit:
+    introduction: Ce formulaire vous permet de mettre à jour vos informations et configurations.
+    action: user/update
+    field_deny:
+      - created_at
+      - cnx_cookie
+      - is_active
+      - is_admin
+      - is_writer
+    # field_order:  # idUField,loginUField,emailUField,pwdUField
+    fields:
+      idUField:
+        field: id
+      loginUField:
+        field: login
+        name: Code d'accès
+        type: plain
+      pwdUField:
+        field: pwd
+        name: Nouveau mot de passe
+        info: (Ne remplir que pour changer le mot de passe)
+        type: pwd
+      emailUField:
+        field: email
+        type: plain
+      born_on:
+        name: Date de naissance
+    submit: Envoyer
+
+  list:
+    order_by: name
+    field_deny:
+      - pwd
+      - id
+    fields:
+      is_active:
+        name: Ac.
+        info: compte actif
+        type: bool_cross
+      is_admin:
+        name: Adm.
+        info: Administrateur
+        type: bool_cross
+

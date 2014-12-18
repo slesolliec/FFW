@@ -1,0 +1,177 @@
+
+# FFW configuration of module
+table: pages
+object: page
+object_genre: f
+object_art: une
+object_det: 'la '
+
+action_links:	# pour supprimer les liens d'action par defaut
+
+
+actions:
+
+  create:
+    field_deny:
+      - created_at
+      - updated_at
+      - user_id
+      - editor_ip
+      - editor_hostname
+      - dir
+      - menu_rank
+      - nb_comments
+      - page_time
+    fields:
+      wiki_id:
+        type: hidden
+        filter: global $wiki; return $wiki['id'];
+      name:
+        name: Adresse de la page
+        filter: return $params;
+      title:
+        name: Titre
+      content:
+        name: Contenu
+        type: text_rich
+        dressing: above
+      edit_desc:
+        filter: return "Création de la page";
+        info: Entrez ici un descriptif de vos modifications
+      tags:
+        name: Mots-clés
+      menu_title:
+        name: Titre menu
+        info: L'intitulé si cette page doit apparaître dans le menu de navigation - faites court
+      page_date:
+        name: Date
+        type: datetime
+        info: N'associez une date à votre page que si elle correspond à un évènement daté
+      category:
+        name: Rubrique
+        info: Il n'est pas obligatoire d'associer une rubrique à chaque page.
+      bozobozo:
+        filter: "if (!$user['is_admin']) {$mod['actions']['edit']['field_deny'][] = 'menu_title';}"
+        
+  insert:
+    fields:
+      wiki_id:
+        filter: global $wiki; return $wiki['id'];
+      name:
+        filter: return clean_up_page_name($oo['name']);
+      content:
+        filter: return turn_into_valid_xhtml($oo['content']); 
+      dir:
+        filter: return get_dir_from_page_name($oo['name']);
+      user_id:
+        filter: return $user[$idUField];
+      editor_ip:
+        filter: return $user['ip'];
+      editor_hostname:
+        filter: return $user['hostname'];
+    hook_after_query: include $conf['ffw'].'mod_wiki/hook_after_write.php';
+    redirect: return $wiki['url'].$oo['name'].'?'.date('U');
+        
+  edit:
+    field_deny:
+      - updated_at
+      - created_at
+      - user_id
+      - editor_ip
+      - editor_hostname
+      - dir
+      - menu_rank
+      - nb_comments
+      - page_time
+    fields:
+      wiki_id:
+        type: hidden
+      name:
+        name: Adresse de la page
+        type: plain
+      title:
+        name: Titre
+      content:
+        name: Contenu
+        type: text_rich
+        dressing: above
+      edit_desc:
+        filter: return "Création de la page";
+        info: Entrez ici un descriptif de vos modifications
+      tags:
+        name: Mots-clés
+      menu_title:
+        name: Titre menu
+        info: L'intitulé si cette page doit apparaître dans le menu de navigation - faites court
+      page_date:
+        name: Date
+        type: datetime
+        info: N'associez une date à votre page que si elle correspond à un évènement daté
+        filter: return $oo['page_date'].' '.str_replace(':','h',substr($oo['page_time'],0,5));
+      category:
+        name: Rubrique
+        info: Il n'est pas obligatoire d'associer une rubrique à chaque page.
+      bozobozo:
+        filter: "if (!$user['is_admin']) {$mod['actions']['edit']['field_deny'][] = 'menu_title';}"
+
+  update:
+    fields:
+      wiki_id:
+        filter: global $wiki; return $wiki['id'];
+      content:
+        filter: return turn_into_valid_xhtml($oo['content']); 
+      dir:
+        filter: return get_dir_from_page_name($oo['name']);
+      user_id:
+        filter: return $user[$idUField];
+      editor_ip:
+        filter: return $user['ip'];
+      editor_hostname:
+        filter: return $user['hostname'];
+      bozobozo:
+        filter: $db->execute('insert into pages_archives select * from pages where id='.$oo['id']);
+    hook_after_query: include $conf['ffw'].'mod_wiki/hook_after_write.php';
+    redirect: return $wiki['url'].$oo['name'].'?'.date('U');
+
+  list:
+    order_by: name
+    field_deny:
+      - wiki_id
+      - id
+      - title
+      - content
+      - created_at
+      - menu_title
+      - menu_rank
+      - dir
+      - tags
+      - edit_desc
+      - editor_ip
+      - editor_hostname
+      - page_date
+      - page_time
+    fields:
+      name:
+        name: Adresse - Titre
+        filter: return "<a href='{$wiki['url']}{$oo['name']}'>{$oo['name']}</a><br />{$oo['title']}";
+      updated_at:
+        name: <acronym title="Mis à Jour">MaJ</acronym> à
+        filter: return inverser_date($oo['updated_at']).' '.str_replace(':','h',substr($oo['updated_at'],11,5));
+      user_id:
+        name: <acronym title="Mis à Jour">MaJ</acronym> par
+        filter: return $db->getone("select {$wiki['author_name_column']} from $userTable where id={$oo['user_id']}");
+        type: string
+      view_link:
+        filter: return "<a href='{$wiki['url']}{$oo['name']}'><img src='ffw/icons/doc_view.png' alt='voir' width='16' height='16' /></a>";
+      edit_link:
+        filter: return "<a href='{$wiki['url']}edit/{$oo['name']}'><img src='ffw/icons/doc_edit.png' alt='modifier' width='16' height='16' /></a>";
+      category:
+        name: Rubrique
+      nb_comments:
+        name: c.
+        info: Nombre de commentaires
+        
+
+  delete:
+    hook_after_query: $db->execute('delete from tag_index where page_id='.$oo['id']);$db->execute('delete from page_archives where id='.$oo['id']);
+    redirect: return $wiki['url'].'list?'.date('U');

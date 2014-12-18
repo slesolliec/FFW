@@ -1,0 +1,14 @@
+
+# these are the configurations of this blog
+
+id: 1
+url: http://multipass.local/pav/
+root: /Users/stephane/web/multipas/pav/
+owner: stephanels
+# authors can be specified as email, login, or ID
+authors:
+  - stephane@metacites.net
+title: Parc de l'Aventure Virtuelle
+description: Weblog du projet Parc de l'Aventure Virtuelle
+
+

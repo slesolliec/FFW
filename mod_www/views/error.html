@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="fr-FR" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{$conf.flag} | {$page.title}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<base href="{$conf.url}" />
+	<link rel="stylesheet" href="ffw/style.css" type="text/css" />
+	<link rel="home" title="Home page" href="/" />
+</head>
+
+<body>
+
+<div id="page">
+		<h1 style="">{$page.title}</h1>
+		<div id="message">{$page.content}</div>
+		{$page.content2}
+</div>
+
+{if $conf.mode == 'dev'}
+<div align="center">
+	<table><tr><td bgcolor="white">
+		{$page.debug}
+	</td></tr></table>
+	<br/>
+	<br/>
+	<table><tr><td bgcolor="white">
+		{$page.queries}
+	</td></tr></table>
+</div>
+{/if}
+
+
+<style type="text/css">
+	{literal}
+	#page {margin:40px auto;width:400px;padding:6px;}
+	h1 {padding-left:20px;border-right:1px solid black;}
+	#message {padding:4px;padding-left:20px;}
+	{/literal}
+</style>
+
+
+</body>
+</html>

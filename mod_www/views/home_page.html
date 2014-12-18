@@ -1,0 +1,92 @@
+{literal}
+<style type="text/css">
+#content {	width:350px; }
+#column {display:none;}
+</style>
+{/literal}
+
+
+<div id="content_contener" style="position:relative;">
+	<div id="post_list">
+		{if $posts}
+			
+			{*
+			<!-- comme ci -->
+			<table width="100%">
+				<tr><th>heure</th>
+					<th width="19"><img src="http://www.{$conf.domain}/img/smileys/msn/regular_smile.gif" width="19" height="19" alt="smiley" /></th>
+					<th>note</th>
+					<th>par</th>
+					<th>sur</th>
+					</tr>
+			{section name=sec loop=$posts}
+			<tr>
+				<td align="center" class="level{$posts[sec].karma|karma2level}">{$posts[sec].post_hour|substr:0:5}</td>
+				<td align="center"><img width="19" height="19" src="http://www.{$conf.domain}/img/smileys/msn/{$posts[sec].smiley}.gif" alt="smiley : {$posts[sec].smiley}" /></td>
+				<td style="padding-left:2px;"><a href="http://{$posts[sec].subdomain}.{$conf.domain}/post/{$posts[sec].post_id}">{$posts[sec].title}</a></td>
+				<td class="level{$posts[sec].lvl_author}"><a href="http://www.{$conf.domain}/user/{$posts[sec].id}">{$posts[sec].login}</a></td>
+				<td class="level{$posts[sec].lvl_blog|karma2level}"><a href="http://{$posts[sec].subdomain}.{$conf.domain}/">{$posts[sec].subdomain}</a></td>		
+			</tr>
+			{/section}
+			</table>
+			*}
+		
+			<!-- comme ça -->
+			<table width="100%" cellspacing="0">
+				<!-- tr><th>qui</th>
+					<th width="19"><img src="http://www.{$conf.domain}/img/smileys/msn/regular_smile.gif" width="19" height="19" alt="smiley" /></th>
+					<th>note</th>
+					</tr -->
+			{assign var='the_day' value='0000-00-00'}
+			{section name=sec loop=$posts}
+				{if $posts[sec].post_day != $the_day}
+					<tr><td colspan="4" style="padding:0;"><h2 class="the_day">{$posts[sec].post_day}</h2></td></tr>
+				{/if}
+				<tr valign="top" class="author_{$posts[sec].user_id}">
+					<td align="center" valign="middle"><img width="19" height="19" src="http://www.{$conf.domain}/img/smileys/msn/{$posts[sec].smiley}.gif" alt="smiley : {$posts[sec].smiley}" /><br />
+						{$posts[sec].post_hour|substr:0:5|replace:':':'h'}
+						</td>
+					<td width="36" class="level{$posts[sec].lvl_author}" style="border:0;background:none;"><a href="http://{$posts[sec].subdomain}.{$conf.domain}/" style="border:0;text-decoration:none;"><img alt="{$posts[sec].subdomain}" src="/icon_blog/{if $posts[sec].photo}{$posts[sec].blog_id}.{$posts[sec].photo}{else}anonymous.jpg{/if}" width="40" height="40" border="0" style="border:1px solid black;" /></a></td>
+					<td style="padding-left:2px;"><a href="http://{$posts[sec].subdomain}.{$conf.domain}/post/{$posts[sec].post_id}">{$posts[sec].title|truncate:55}</a><br />
+						par <a href="/user/view/{$posts[sec].login}">{$posts[sec].login}</a>
+						<!--  - 12c. -->
+						</td>
+					<td align="right">{$posts[sec].nb_comments}</td>
+				</tr>
+				{assign var='the_day' value=$posts[sec].post_day}
+			{/section}
+			</table>
+		
+		{else}
+			
+			Aucune note trouv&eacute;e
+		
+		{/if}
+		
+			<div align="center" style="margin-top:10px;">
+				{if $page.yesterday}<a href="/{$page.yesterday}" style="text-decoration:none;">&lt; {$page.yesterday} |</a>{/if}
+				{$page.today|replace:'-':'/'}
+				{if $page.tomorrow}<a href="/{$page.tomorrow}" style="text-decoration:none;">| {$page.tomorrow} &gt;</a>{/if}
+			</div>
+		
+	</div>
+
+</div>
+
+
+<script type="text/javascript">
+H = $('post_list').offsetHeight;
+if ($('post_list').offsetHeight < $('column').offsetHeight)
+H = $('column').offsetHeight;
+
+$('content_contener').style.height = H+'px';
+</script>
+
+{if $hated}
+	<style type="text/css">
+		{foreach item=h from=$hated name=foo}
+			.author_{$h.to_id}{if $smarty.foreach.foo.index>0},{/if}
+		{/foreach}
+		{literal}{display:none;}{/literal}
+	</style>
+{/if}

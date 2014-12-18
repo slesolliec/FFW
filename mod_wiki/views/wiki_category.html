@@ -1,0 +1,20 @@
+
+{if $pages}
+
+	{section name=sec loop=$pages}
+		<div class="archive">
+			<strong><a href="{$wiki.url}{$pages[sec].name}">{$pages[sec].title}</a></strong><br />
+			{$pages[sec].content|strip_tags|truncate:250}<br />
+			<a href="{$wiki.url}{$pages[sec].name}">{$wiki.url}{$pages[sec].name}</a>
+			<div class="signature">
+				mis à jour le {$pages[sec].updated_at|substr:0:10|inverser_date}
+				à {$pages[sec].updated_at|substr:11:5|replace:':':'h'}
+				par	{$pages[sec].author_name}
+			</div>
+		</div>
+	{/section}
+
+{else}
+		<p>Aucune page trouvée.</p>
+{/if}
+

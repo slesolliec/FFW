@@ -1,0 +1,28 @@
+<h3>Gestion des menus</h3>
+
+<p>Cette page vous permet de choisir l'ordre des menus de votre wiki.</p>
+
+<p>Les menus sont classés par rang, puis par ordre alphabétique.</p>
+
+<form action="{$wiki.url}menu" method="post">
+
+	<table>
+		<tr>
+			<th>menu</th>
+			<th>adresse</th>
+			<th></th>
+			<th></th>
+			<th>rang</th>
+		</tr>
+	{foreach item=m from=$menus}
+		<tr valign="top">
+			<td>{$m.menu_title}</td>
+			<td><a href="{$wiki.url}{$m.name}" class="backlink">{$menus[sec].name}</a></td>
+			<td><a href="{$wiki.url}menu?id={$m.id}&amp;do=up" class="backlink">[+]</a></td>
+			<td><a href="{$wiki.url}menu?id={$m.id}&amp;do=down" class="backlink">[-]</a></td>
+			<td align="right">{$m.menu_rank}</td>
+		</tr>
+	{/foreach}
+	</table>
+
+</form>

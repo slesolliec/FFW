@@ -1,0 +1,22 @@
+
+<div class="posts">
+	<div class="access_{$oo.is_dev}">
+		<div class="content">
+			{$oo.content}
+		</div>
+
+		<div class="signature">
+			le {$oo.post_day|inverser_date}
+			à {$oo.post_hour|substr:0:5|replace:':':'h'}
+			par	{$oo.author_name}
+			dans <a href="{$blog.url}category/{$oo.category}">{$oo.category}</a>
+			| <a href="{$blog.url}post/{$oo.id}">{$oo.nb_comments} commentaire{if $oo.nb_comments>1}s{/if}</a>
+			{if $oo.user_id == $user.id}
+				| <a href="{$blog.url}post/edit/{$oo.id}">modifier</a>
+			{/if}
+		</div>
+	</div>
+</div>
+
+
+{$page.comments}

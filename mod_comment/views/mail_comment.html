@@ -1,0 +1,16 @@
+
+<div style="padding:4px;padding-left:20px;">
+	Un commentaire vient d'être ajouté à :<br />
+	<a href="{$c.oo_url}">{$c.oo_title}</a><br />
+</div>
+
+<div id="comment_{$c.id}" class="postComment" style="margin-bottom:0;margin-right:0;">
+	{$c.comment|comment_mix}
+	<div class="signature">
+		de	{$c.author_name}</a>
+		le {$c.post_day}
+		à {$c.post_hour|truncate:5:""|replace:':':'h'}
+	</div>
+</div>
+
+

@@ -1,0 +1,37 @@
+
+<div id="div_comments">
+	
+	{if $comments}
+		<div id="comments">
+		{foreach item=c from=$comments}
+			<div class="comment_{cycle values="odd,even"}" id="comment_{$c.id}">
+				{if $oo.user_id==$user.id OR $user.is_admin}
+					<div style="float:right;"><a href="{$conf.url}comment/delete/{$page.module}/{$oo.id}/{$c.id}/{$c.id|xss_armor}?oo_url={$page.url|urlencode}" onclick="return confirm('certain ?');">supprimer</a></div>
+				{/if}
+				{$c.comment|comment_mix}
+				<div class="sign">
+					par {$c.author_name}
+					le {$c.created_at|inverser_date}
+					à {$c.created_at|substr:11:5|replace:':':'h'}
+				</div>
+			</div>
+		{/foreach}
+		</div>
+	{/if}
+	
+	{if $user.id > 0}
+		<form action="{$conf.url}comment/insert" method="post" id="make_comment">
+			<input type="hidden" name="module" value="{$page.module}" />
+			<input type="hidden" name="oo_id" value="{$oo.id}" />
+			<input type="hidden" name="oo_title" value="{$page.title}" />
+			<input type="hidden" name="oo_url" value="{$page.url}" />
+			<input type="hidden" name="oo_user_id" value="{$oo.user_id}" />
+			Un commentaire, une remarque, une question :<br />
+			<textarea name="comment" id="comment"></textarea><br />
+			<input type="submit" value="Envoyer" />
+		</form>
+	{else}
+		<p>Vous pouvez laisser un commentaire, une remarque ou une question concernant cette page, en vous connectant au site (en bas de la colonne de gauche).</p>
+	{/if}
+
+</div>

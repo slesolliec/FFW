@@ -1,0 +1,8 @@
+<div class="box">
+	<h3 class="handle">{$mod.filter.title|default:"Filtre"}</h3>
+
+	<form method="get" action="{$page.module}/list">
+		{$mod.table|filter_maker:$mod.filter}
+		<input type="submit" value="{$mod.filter.submit|default:"Filtrer"}" />
+	</form>
+</div>

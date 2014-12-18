@@ -1,0 +1,10 @@
+
+
+<p>Si vous avez oublié votre mot de passe, donnez votre 
+	{if $conf.userTable.loginUField != 'none'}code d'accès ou votre{/if} adresse email au formulaire ci-dessous.<br />
+	Un nouveau mot de passe vous sera envoyé.
+</p>
+<form action='login/send_new' method='post'>
+	{if $conf.userTable.loginUField != 'none'}code d'accès ou{/if} email :<br /> <input type='text' name='login' size='30' /><br /><br />
+	<input type='submit' value='Envoyez-moi un nouveau mot de passe' />
+</form>

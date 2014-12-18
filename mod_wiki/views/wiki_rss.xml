@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:admin="http://webns.net/mvcb/"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns="http://purl.org/rss/1.0/">
+
+<channel rdf:about="{$conf.url}">
+	<title>{$conf.title}</title>
+	<description>{$conf.description}</description>
+	<link>{$conf.url}</link>
+	<dc:date>{$pages[0].updated_at}</dc:date>
+	<admin:generatorAgent rdf:resource="http://www.multipass.fr/wikipass/" />
+  
+	<sy:updatePeriod>daily</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+  
+	<items>
+	<rdf:Seq>
+	{section name=sec loop=$pages}
+    <rdf:li rdf:resource="{$conf.url}{$pages[sec].name|urlencode}" />
+	{/section}
+	</rdf:Seq>
+	</items>
+</channel>
+
+{section name=sec loop=$pages}
+<item rdf:about="{$conf.url}{$pages[sec].name|urlencode}">
+	<title>{$pages[sec].title}</title>
+	<link>{$conf.url}{$pages[sec].name|urlencode}</link>
+	<dc:date>{$pages[sec].updated_at}</dc:date>
+	<dc:creator>{$pages[sec].author_name}</dc:creator>
+	<dc:subject>{$pages[sec].tags}</dc:subject>
+	<description>{$pages[sec].edit_desc}</description>
+	<content:encoded><![CDATA[{$pages[sec].content}{if $pages[sec].content|strlen == 2048}...{/if}]]></content:encoded>
+</item>
+{/section}
+
+</rdf:RDF>

@@ -1,0 +1,9 @@
+
+<div class="widget_wiki_months">
+	<div class="box">
+		<h3>Archives</h3>
+		{foreach item=month from=$months}
+			<a href="{$wiki.url}archive/{$month.month|replace:'-':'/'}">{$month.month|substr:5|get_month} {$month.month|substr:0:4} ({$month.nb})</a>
+		{/foreach}
+	</div>
+</div>

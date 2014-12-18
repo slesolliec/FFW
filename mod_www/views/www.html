@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="fr-FR" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{$conf.flag} | {$page.title}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<base href="{$conf.url}" />
+	<link rel="stylesheet" href="ffw/style.css" type="text/css" />
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<link rel="stylesheet" href="style-print.css" media="print" type="text/css"/>
+	<link rel="home" title="Home page" href="/" />
+{if $page.prev}	<link rel="prev" href="{$page.prev}" />{/if}
+{if $page.next}	<link rel="next" href="{$page.next}" />{/if}
+{if $page.rss}	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$page.rss}" />{/if}
+
+	<link type="text/css" href="ffw/js/jquery-ui-css/ui-lightness/jquery-ui-1.7.2.custom.css" rel="Stylesheet" />	
+	<script src="ffw/js/jquery-1.3.2.min.js" type="text/javascript"></script>
+	<script src="ffw/js/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
+
+	<!-- auto complete -->
+	<link rel="stylesheet" href="ffw/js/jquery-autocomplete/jquery.autocomplete.css" type="text/css" />
+	<script type="text/javascript" src="ffw/js/jquery-autocomplete/lib/jquery.bgiframe.min.js"></script>
+	<script type="text/javascript" src="ffw/js/jquery-autocomplete/lib/jquery.dimensions.js"></script>
+	<script type="text/javascript" src="ffw/js/jquery-autocomplete/jquery.autocomplete.js"></script>
+ 
+   	{if strpos($user.browser,'MSIE 6')}
+		<script type="text/javascript" src="ffw/js/pngfix.js"></script>
+		<link rel="stylesheet" href="ffw/ie6fix.css" type="text/css" />
+	{/if}
+	<link rel="shortcut icon" href="/favicon.ico" />
+	<script type="text/javascript" src="ffw/js/happySelector.js"></script>
+
+	<style type="text/css">@import url(ffw/js/jscalendar-1.0/skins/aqua/theme.css);</style>
+	<script type="text/javascript" src="ffw/js/jscalendar-1.0/calendar.js"></script>
+	<script type="text/javascript" src="ffw/js/jscalendar-1.0/lang/calendar-en.js"></script>
+	<script type="text/javascript" src="ffw/js/jscalendar-1.0/lang/calendar-fr.js"></script>
+	<script type="text/javascript" src="ffw/js/jscalendar-1.0/calendar-setup.js"></script>
+</head>
+
+<body>
+	<script type="text/javascript" src="ffw/js/wz_tooltip/wz_tooltip.js"></script>
+
+	<div id="page">
+		
+		<!-- content -->
+		<div id="content">
+			{if $page.title}<h1>{$page.title}</h1>{/if}
+			<div id="inner_content">
+			{$page.content}
+			</div>
+		</div>
+
+		<!-- head -->
+		<div id="head">
+			<h1><a href="{$conf.url}">{$conf.title}</a></h1>
+			<h2>{$conf.description}</h2>
+	
+			<div id="menubar">
+				{foreach item=link key=key from=$conf.menu}
+					<a href="{$link}">{$key}</a>
+				{/foreach}
+			</div>
+	
+			<div id="menubar2">
+				{foreach item=link key=key from=$conf.menu2}
+					<a href="{$link}">{$key}</a>
+				{/foreach}
+			</div>
+		</div>
+
+		<!-- column -->
+		<div id="column">
+				{if $page.filter_form}
+					{$page.filter_form}
+				{/if}
+
+				{$page.column}
+		</div>
+
+	
+		<div class="spacer">&nbsp;</div>
+
+		<div id="footbar"></div>
+	</div>
+
+<div id="footer">{$conf.footer}</div>
+
+{if $conf.mode=='dev' and $page.debug==1}
+	<div id="debug">
+		generated in {$page.chrono}s<br/>
+		{$page.queries}
+	</div>
+{/if}
+
+
+<!-- Urchin -->
+<!-- script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">_uacct = "UA-2819330-1";_udn="karmaos.com";urchinTracker();</script -->
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+{if $posts}
+
+	{foreach item=post from=$posts}
+		<div class="posts">
+			<div class="access_{$post.is_dev}">
+				<h2 class="title" id="post-{$post.id}"><a href="{$blog.url}post/{$post.id}">{$post.title}</a></h2>	
+				<div class="content">
+					{$post.content}
+				</div>
+
+				<div class="signature">
+					le {$post.post_day|inverser_date}
+					à {$post.post_hour|substr:0:5|replace:':':'h'}
+					par	{$post.author_name}
+					dans <a href="{$blog.url}category/{$post.category|urlencode}">{$post.category}</a>
+					| <a href="{$blog.url}post/{$post.id}">{$post.nb_comments} commentaire{if $post.nb_comments>1}s{/if}</a>
+					{if $post.user_id == $user.id}
+						| <a href="{$blog.url}post/edit/{$post.id}">modifier</a>
+					{/if}
+				</div>
+			</div>
+		</div>
+	{/foreach}
+
+{/if}

@@ -1,0 +1,53 @@
+
+
+<p>Choisissez les champs que vous voulez exporter :</p>
+
+<form method="get" action="{$page.module}/export_csv">
+	
+	<!-- on passe les variables du filtre -->
+	{if $get}
+		{foreach item=val key=k from=$get}
+			{if $k != 'p'}
+				{if $val != ''}
+					<input type="hidden" name="{$k}" value="{$val}"/>
+				{/if}
+			{/if}
+		{/foreach}
+	{/if}
+	
+	
+	{foreach item=field key=field_name from=$fields}
+		<br/> <input type="checkbox" name="field_to_export[]" value="{$field_name}" id="checkbox_{$field_name}"/>
+				<label for="checkbox_{$field_name}">{$field_name}</label>
+	{/foreach}
+	
+	<br/>
+	<br/><a href="" onclick="check_all(); return false;">tout cocher</a>
+		- <a href="" onclick="uncheck_all(); return false;">tout décocher</a>
+	<br/>
+
+	<br/>
+	<input type="submit" value="Exporter le fichier CSV"/>
+	
+</form>
+
+
+<script type="text/javascript">
+{literal}
+
+function check_all() {
+	checkboxes = $('form input');
+	for (i=0; i<checkboxes.length; i++) {
+		checkboxes[i].checked = 'checked';
+	}
+}
+
+function uncheck_all() {
+	checkboxes = $('form input');
+	for (i=0; i<checkboxes.length; i++) {
+		checkboxes[i].checked = '';
+	}
+}
+
+{/literal}
+</script>

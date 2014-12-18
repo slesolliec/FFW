@@ -1,0 +1,46 @@
+
+
+
+-1- cd to where you want to put FFW
+-2- svn co http://svn.metacites.net/FFW FFW
+-3- after that, you need some librairies :
+	PHP librairies needed :
+		- Spyc from http://code.google.com/p/spyc/
+		- Smarty from http://www.smarty.net/
+		- -- adodb - not anymore, I recoded something similar but much lighter
+		- phpMailer ???
+	JavaScript librairies needed :
+		- Jquery
+		- FCKeditor
+	
+	Download them and link them all
+-4- cd to your www directory
+-5- mv FFW/www_index.php to WWW/index.php
+-6- mkdir the directory where you will put your modules (preferably out of WWW)
+-7- mv FFW/www_config.yml to somewhere config.yml and write into it
+-8- write a WWW/.htaccess so that using mod_rewrite all that goes to WWW is rewriten to WWW/index.php
+	(look into FFW/www_htaccess if you want to)
+-9- create de user table :
+
+CREATE TABLE IF NOT EXISTS `users` (
+	`id` int(11) NOT NULL auto_increment,
+	`nom` varchar(80) default NULL,
+	`prenom` varchar(80) default NULL,
+	`email` varchar(100) default NULL,
+	`pwd` varchar(40) default NULL,
+	`adresse` varchar(250) default NULL,
+	`code_postal` varchar(5) default NULL,
+	`ville` varchar(100) default NULL,
+	`cnx_cookie` varchar(40) default NULL,
+	`is_active` tinyint(3) unsigned default NULL,
+	`is_admin` tinyint(3) unsigned default NULL,
+	`is_writer` tinyint(3) unsigned default NULL,
+	`telephone` varchar(20) default NULL,
+	PRIMARY KEY  (`id`)
+);
+
+
+should be all
+
+
+� 2008 - St�phane Le Solliec - stephane@metacites.net - skype:stef_ls

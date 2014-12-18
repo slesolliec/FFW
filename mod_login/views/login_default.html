@@ -1,0 +1,54 @@
+
+
+{if $user.$idUField}
+
+	<p>Vous êtes déjà connecté en tant que 
+		{if $user.$loginUField}
+			<strong>{$user.$loginUField}</strong>
+		{else}
+			<strong>{$user.$emailUField}</strong>
+		{/if}
+	</p>
+
+{else}
+
+	<h3>Se connecter</h3>
+
+	<form action="login/login" method="post" id="login_form">
+		{if $page.redirect}
+			<input type="hidden" name="redirect" value="{$page.redirect}"/>
+		{/if}
+		<div class="field">
+			<div class="names">{if $loginUField == 'none'}email{else}code d'accès{/if} :</div>
+			<div class="inputs"><input name="login" /></div>
+		</div>
+		<div class="field">
+			<div class="names">mot de passe :</div>
+			<div class="inputs"><input type="password" name="pwd" /></div>
+		</div>
+		<div class="field">
+			<div class="inputs"><input type="submit" value="se connecter" /></div>
+		</div>
+	</form>
+	<br/><a href="login/forgot">mot de passe oublié</a>
+	<br/><a href="user/create">ouvrir un compte</a>
+
+	{if $conf.openid}
+		<h3>Se connecter via openID</h3>
+		<form method="get" action="login/openid_try_auth" class="small_padding">
+			<input type="hidden" name="action" value="verify" />
+			<div class="field">
+				<div class="names">openID :</div>
+				<div class="inputs"><input name="openid_identifier"
+						style="background: white url(ffw/icons/openid.png) left top no-repeat;padding-left:18px;"
+					/></div>
+			</div>
+			<div class="field">
+				<div class="inputs"><input type="submit" value="se connecter via openID" /></div>
+			</div>
+		</form>
+	{/if}
+
+{/if}
+
+

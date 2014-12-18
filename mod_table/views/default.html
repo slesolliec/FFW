@@ -1,0 +1,10 @@
+<p>Voici la liste des tables de données de cette application :</p>
+
+{if $dbs}
+	<ul>
+	{foreach item=table_array key=table_name from=$dbs}
+		<li><a href="{$table_name|rtrim:'s'}">{$table_name}</a></li>
+	{/foreach}
+	</ul>
+{/if}
+

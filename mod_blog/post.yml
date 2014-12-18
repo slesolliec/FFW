@@ -1,0 +1,84 @@
+table: posts
+
+actions:
+  create:
+    action: (module)/insert
+    field_deny:
+      - post_hour
+      - user_id
+      - nb_comments
+      - blog_id
+    fields:
+      title:
+        name: Titre
+      category:
+        name: Rubrique
+      post_day:
+        name: Date
+        type: datetime
+      is_draft:
+        name: Brouillon
+      user_id:
+        name: Auteur
+      content:
+        name: Contenu
+        type: text_rich
+        dressing: above
+
+  edit:
+    action: (module)/update
+    field_deny:
+      - post_hour
+      - nb_comments
+      - blog_id
+    fields:
+      title:
+        name: Titre
+      category:
+        name: Rubrique
+      post_day:
+        name: Date
+        type: datetime
+        filter: return $oo['post_day'].' '.$oo['post_hour'];
+      is_draft:
+        name: Brouillon
+      user_id:
+        name: Auteur
+        type: plain
+      content:
+        name: Contenu
+        type: text_rich
+        dressing: above
+
+    
+  list:
+    field_deny:
+      - content
+    fields:
+      nb_comments:
+        name: c.
+        info: nb commentaires
+      is_draft:
+        name: br.
+        info: brouillon
+      post_hour:
+        name: heure
+        filter: return str_replace(':','h',substr($oo['post_hour'],0,5));
+      post_day:
+        name: jour
+        filter: return substr(inverser_date($oo['post_day']),0,5);
+      title:
+        name: titre
+      category:
+        name: catégorie
+      user_id:
+        name: auth.
+        info: ID de l'auteur
+      content:
+        function: truncate_content
+
+  insert:
+    redirect: return "{$blog['url']}post/{$oo['id']}";
+
+  update:
+    redirect: return "{$blog['url']}post/{$oo['id']}?".date('U');

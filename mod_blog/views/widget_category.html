@@ -1,0 +1,7 @@
+
+<div class="box">
+	<h3>Catégories</h3>
+	{foreach item=cat from=$categories}
+		<a href="{$blog.url}category/{$cat.category|urlencode}">{$cat.category} ({$cat.nb})</a>
+	{/foreach}
+</div>

@@ -1,0 +1,56 @@
+<script type="text/javascript">
+
+data = new Array();
+{section name=sec loop=$pages}
+data[{$smarty.section.sec.index}] = new Array('{$pages[sec].user_id}','{$pages[sec].id}','{$pages[sec].updated_at|replace:':':''|replace:'-':''|replace:' ':''}');
+{/section}
+
+// alert(data[0][0]);  : this gives the first value of the first line of the array :-)
+
+{literal}
+function mass_check(a) {
+	for(i in data) {
+		if (data[i][0] == a) {
+			document.zeform["delete_"+data[i][1]+"_"+data[i][2]].checked = true;
+			}
+		}
+	}
+{/literal}
+</script>
+
+<p>Cette page vous permet de faire le ménage dans vos archives en supprimant certaines versions archivées des pages de votre wiki. Cette manipulation est irréversible et uniquement accessible aux administrateurs.</p>
+
+<p><strong>Astuce :</strong> en cliquant sur le nom de l'utilisateur, vous cochez toutes les pages que cette personne a modfiées.</p>
+
+{if $pages}
+	<form action="{$wiki.url}arch_delete" method="post" name="zeform">
+		<input type="hidden" name="do_it" value="{'YmdH'|date|xss_armor}" />
+		<table>
+			<tr>
+				<th colspan="4">Versions archivées</th>
+			</tr>
+			<tr>
+				<th></th>
+				<th>adresse - modification</th>
+				<th>date</th>
+				<th>editeur</th>
+			</tr>
+		{section name=sec loop=$pages}
+			<tr valign="top">
+				<td><input type="checkbox" name="delete_{$pages[sec].id}_{$pages[sec].updated_at|replace:':':''|replace:'-':''|replace:' ':''}" value="{$pages[sec].updated_at}" /></td>
+				<td><a href="{$wiki.url}{$pages[sec].name}?updated_at={$pages[sec].updated_at}" title="{$pages[sec].title}" class="backlink">{$pages[sec].name}</a>
+					<div class="edit_desc">{$pages[sec].edit_desc}</div>
+					</td>
+				<td>{$pages[sec].updated_at|inverser_date}&nbsp;à&nbsp;{$pages[sec].updated_at|substr:11:5|replace:':':'h'}</td>
+				<td align="center"><a href="javascript:mass_check('{$pages[sec].user_id}');" style="color:black;">{$pages[sec].author_name}</a></td>
+			</tr>
+		{/section}
+			<tr>
+				<td colspan="4"><input type="submit" value="supprimer ces versions archivées" /></td>
+			</tr>
+		</table>
+	</form>
+{else}
+	<strong>Il n'y a aucune page en archive pour le moment. Vous n'avez donc rien à supprimer.</strong>
+{/if}
+

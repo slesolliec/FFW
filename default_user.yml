@@ -1,0 +1,6 @@
+userTable: users
+idUField: id
+loginUField: login
+pwdUField: pwd
+emailUField: email
+cookieUField: cnx_cookie

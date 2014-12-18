@@ -1,0 +1,56 @@
+
+<p>This example consumer uses the <a href="http://www.openidenabled.com/openid/libraries/php/">PHP
+	OpenID</a> library. It just verifies that the URL that you enter is your identity URL.
+</p>
+
+{if $page.msg}<div class="alert">{$page.msg}</div>{/if}
+{if $page.error}<div class="error">{$page.error}</div>{/if}
+{if $page.success}<div class="success">{$page.success}</div>{/if}
+
+<div id="verify-form">
+	<form method="get" action="login/openid_try_auth">
+		Identity&nbsp;URL:
+		<input type="hidden" name="action" value="verify" />
+		<input type="text" name="openid_identifier" value=""
+			style="background: white url(ffw/icons/openid.png) left top no-repeat;padding-left:18px;"
+		/>
+
+<!-- 
+		<p>Optionally, request these PAPE policies:</p>
+		<p>
+			{foreach item=uri from=$pape_uris}
+				<input type="checkbox" name="policies[]" value="{$uri}" /> {$uri}<br/>
+			{/foreach}
+		</p>
+-->
+		<input type="submit" value="Verify" />
+	</form>
+</div>
+
+
+<style type="text/css">
+{literal}
+
+.alert {
+	border: 1px solid #e7dc2b;
+	background: #fff888;
+	padding: 2px;
+}
+.success {
+	border: 1px solid #669966;
+	background: #88ff88;
+	padding: 2px;
+}
+.error {
+	border: 1px solid #ff0000;
+	background: #ffaaaa;
+	padding: 2px;
+}
+#verify-form {
+	border: 1px solid #777777;
+	background: #dddddd;
+	margin-top: 1em;
+	padding: 2px;
+}
+{/literal}
+</style>

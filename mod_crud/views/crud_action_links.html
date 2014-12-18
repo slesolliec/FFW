@@ -1,0 +1,12 @@
+{* this template is not called by an action : it simply lists the actions *}
+
+{if $page.action_links}
+	<div class="action_links">
+	{foreach item=link from=$page.action_links}
+		{if $link.url}
+		<a href="{$link.url}">{if $link.img}<img src="{$link.img}" width="16" height="16" alt="{$link.txt}" align="absmiddle"/>{/if} {$link.txt}</a>
+		{/if}
+	{/foreach}
+	</div>
+{/if}
+

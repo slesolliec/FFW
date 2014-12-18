@@ -1,0 +1,61 @@
+<p><strong>Dernières pages modifiées</strong>
+	 - <a href="{$wiki.url}rss" title="Flux RSS des modifications du site."><img src="ffw/icons/rss.png" width="14" height="14" alt="Flux RSS des modifications du site." /></a></p>
+	
+<script language="JavaScript" type="text/javascript">
+{literal}
+<!-- 
+
+function roule(a,b) {
+	if (document.getElementById('click_'+a).innerHTML == "[+]"){
+		for (i=0;i<b;i++) {
+			document.getElementById('under'+a+'_'+i).style.display = '';
+			}
+		document.getElementById('click_'+a).innerHTML = "[-]";
+	} else {
+		for (i=0;i<b;i++) {
+			document.getElementById('under'+a+'_'+i).style.display = 'none';
+			}
+		parent.document.getElementById('click_'+a).innerHTML = "[+]";
+	}
+	return;
+	}
+
+// -->
+{/literal}
+</script>
+
+<table cellspacing="1" border="0" width="100%">
+	<tr>
+		<th></th>
+		<th>adresse - modif</th>
+		<th><acronym title="Mise à Jour">MaJ</acronym> le</th>
+		<th>utilisateur</th>
+	</tr>
+<!-- last edited pages -->
+{section name=sec loop=$pages}
+	<tr valign="top" class="daysago{$pages[sec].days_ago}">
+		{if $pages[sec].archives}
+			<td align="center" id="click_{$smarty.section.sec.index}" onclick="javascript:roule({$smarty.section.sec.index},{$pages[sec].archives_nb});" style="cursor: pointer; cursor: hand;font-family:monospace;">[+]</td>
+		{else}
+			<td>&nbsp;</td>
+		{/if}
+		<td><a href="{$wiki.url}{$pages[sec].name}">/{$pages[sec].name}</a>
+			<div class="edit_desc">{$pages[sec].edit_desc}</div></td>
+		<td align="center">{$pages[sec].updated_at|inverser_date}&nbsp;à&nbsp;{$pages[sec].updated_at|substr:11:5|replace:':':'h'}</td>
+		<td align="center">{$pages[sec].author_name}</td>
+	</tr>
+
+	{if $pages[sec].archives}
+		{section name=sec2 loop=$pages[sec].archives}
+			<tr valign="top" class="daysago{$pages[sec].archives[sec2].days_ago}" style="display:none;" id="under{$smarty.section.sec.index}_{$smarty.section.sec2.index}">
+				<td>&nbsp;</td>
+				<td><div class="edit_desc"><a href="{$wiki.url}{$pages[sec].name}?updated_at={$pages[sec].archives[sec2].updated_at}">{$pages[sec].archives[sec2].edit_desc}</a></div></td>
+				<td align="center">{$pages[sec].archives[sec2].updated_at|inverser_date}&nbsp;{$pages[sec].archives[sec2].updated_at|substr:11:5|replace:':':'h'}</td>
+				<td align="center">{$pages[sec].archives[sec2].author_name}</td>
+			</tr>
+		{/section}
+	{/if}
+	
+	
+{/section}
+</table>

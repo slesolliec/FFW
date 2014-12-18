@@ -1,0 +1,23 @@
+
+<p class="introduction">{$page.introduction}</p>
+
+{if $page.table}
+	
+	{$page.table}
+
+	{if $page.export}
+	<div align="center" style="margin:10px auto;padding:4px;width:200px;background:#DDF;">
+		<a href="{$page.module}/export{if $page.query_string}?{$page.query_string}{/if}" style="text-decoration:none;">
+			<img alt="Télécharger au format CSV" src="ffw/icons/disk.png" width="16" height="16" align="absmiddle" />
+			Exporter au format CSV
+		</a>
+	</div>
+	{/if}
+	
+{else}
+
+	<p>Aucun objet trouvé.</p>
+
+{/if}
+
+

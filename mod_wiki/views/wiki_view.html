@@ -1,0 +1,39 @@
+
+{if $page.archive}
+	<div class="archived">Version archivée</div>
+
+	<style type="text/css">
+	{literal}
+	div.archived {
+		margin:4px 4px 4px 0;
+		border:2px solid black;
+		background:red;
+		font-weight:bold;
+		color:white;
+		text-align:center;
+	{/literal}
+	</style>
+{/if}
+
+{$page.content}
+
+<div class="signature">
+	{if $page.archive}
+		version archivée du {$page.updated_at|substr:0:10|inverser_date}
+		à {$page.updated_at|substr:11:5|replace:':':'h'}
+	{else}
+		mis à jour le {$page.updated_at|substr:0:10|inverser_date}
+		à {$page.updated_at|substr:11:5|replace:':':'h'}
+	{/if}
+	par	{$page.author_name}
+	{if $user.is_writer}
+		| <a href="{$wiki.url}edit/{$page.name}{if $page.archive}?updated_at={$page.updated_at}{/if}"
+			title="modifier cette page" accesskey="e" rel="nofollow"
+			>{if $page.archive}reprendre{else}modifier{/if}</a>
+			
+		| 	<a href="{$wiki.url}history/{$page.name}" accesskey="h" rel="nofollow"
+				title="historique des modifications de la page">historique</a>
+	{/if}
+</div>
+
+{$page.comments}
